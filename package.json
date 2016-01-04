@@ -5,6 +5,9 @@
     "express": "latest",
     "express-session": "latest",
     "passport": "latest",
-    "passport-nest": "latest"
+    "passport-nest": "latest",
+    "grunt": "latest",
+    "firebase": "latest",
+    "node-persist": "latest"
   }
 }

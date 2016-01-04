@@ -236,7 +236,21 @@ $('#cooling-down-button').on('click', function () {
 */
 function firstChild(object) {
   for(var key in object) {
+    console.log(object[key]);
+  }
+  for(var key in object) {
     return object[key];
+  }
+}
+
+function getThermostatId(data, structure, name) {
+  var therms = data.devices.thermostats
+  // TODO filter by structure
+
+  for (var t in therms) {
+    if (therms[t].name == name) {
+      return t;
+    }
   }
 }
 
@@ -246,15 +260,20 @@ function firstChild(object) {
 
 */
 dataRef.on('value', function (snapshot) {
+
   var data = snapshot.val();
+
+  var thermostatId = getThermostatId(data, "Mark Twain", "Upstairs");
+  console.log(thermostat)
 
   // For simplicity, we only care about the first
   // thermostat in the first structure
   structure = firstChild(data.structures),
-  thermostat = data.devices.thermostats[structure.thermostats[0]];
+  thermostat = data.devices.thermostats[thermostatId];
+  //console.log(data)
 
   // TAH-361, device_id does not match the device's path ID
-  thermostat.device_id = structure.thermostats[0];
+  thermostat.device_id = thermostatId;
 
   updateThermostatView(thermostat);
   updateStructureView(structure);
